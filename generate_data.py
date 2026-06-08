@@ -1,23 +1,30 @@
 import pandas as pd
+import numpy as np
 
-rows = []
+# Reproducible random numbers
+np.random.seed(42)
 
-for i in range(1, 61):
-    rows.append({
-        "temperature": round(28 + i * 0.25, 2),
-        "humidity": round(70 + i * 0.8, 1),
-        "co2": 650 + i * 8,
-        "yield": round(12 + i * 0.15, 2)
-    })
+n = 300
 
-df = pd.DataFrame(rows)
+temperature = np.random.normal(30, 3, n)
+humidity = np.random.normal(85, 8, n)
+co2 = np.random.normal(850, 80, n)
 
-# Add some missing values
-df.loc[5, "temperature"] = None
-df.loc[10, "humidity"] = None
-df.loc[15, "co2"] = None
-df.loc[20, "yield"] = None
+yield_kg = (
+    8
+    + 0.25 * temperature
+    + 0.04 * humidity
+    - 0.001 * co2
+    + np.random.normal(0, 0.8, n)
+)
+
+df = pd.DataFrame({
+    "temperature": temperature.round(2),
+    "humidity": humidity.round(2),
+    "co2": co2.round(2),
+    "yield": yield_kg.round(2)
+})
 
 df.to_csv("data/raw/polyhouse_sensor.csv", index=False)
 
-print("Rows:", len(df))
+print("Dataset regenerated successfully.")
