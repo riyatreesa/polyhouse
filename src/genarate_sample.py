@@ -14,10 +14,10 @@ co2 = rng.normal(900, 80, n)
 # Generate yield with randomness
 yield_kg = (
     8
-    + 0.20 * temp
-    + 0.02 * hum
+    + 0.30 * temp
+    + 0.03 * hum
     - 0.001 * co2
-    + rng.normal(0, 2.5, n)
+    + rng.normal(0, 1.0, n)
 )
 
 # Create DataFrame
