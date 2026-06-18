@@ -16,8 +16,17 @@ print(df.isna().sum())
 df = df.drop_duplicates()
 
 # Remove rows with missing values
-df = df.dropna()
+df["temperature_c"] = df["temperature_c"].fillna(
+    df["temperature_c"].mean()
+)
 
+df["humidity_pct"] = df["humidity_pct"].fillna(
+    df["humidity_pct"].mean()
+)
+
+df["co2_ppm"] = df["co2_ppm"].fillna(
+    df["co2_ppm"].mean()
+)
 # Add source file column
 df["source_file"] = "polyhouse_sensor.csv"
 
